@@ -34,7 +34,7 @@ robustly throttle: 1000 do
 end
 ```
 
-Specify a default value to return on errors [master]:
+Specify a default value to return on errors:
 
 ```ruby
 robustly default: 30 do
@@ -45,7 +45,7 @@ end
 Catch specific errors
 
 ```ruby
-robustly only: [ActiveRecord::RecordNotUnique] do
+robustly only: ActiveRecord::RecordNotUnique do
   # all other exceptions will be raised
 end
 ```
