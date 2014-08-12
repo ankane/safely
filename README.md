@@ -10,11 +10,11 @@ end
 
 Raises exceptions in development and test environments and rescues and reports exceptions elsewhere.
 
-Also aliased to `yolo`.
+Also aliased as `yolo`.
 
 ```ruby
 yolo do
-  # you only live once
+  # get crazy in here
 end
 ```
 
@@ -31,6 +31,14 @@ And throttle reporting with:
 ```ruby
 robustly throttle: 1000 do
   # reports ~ 1/1000 errors
+end
+```
+
+Specify a default value to return on errors [master]:
+
+```ruby
+robustly default: 30 do
+  # big bucks, no whammy
 end
 ```
 

@@ -4,6 +4,7 @@ class TestRobustly < Minitest::Test
 
   def setup
     Robustly.env = "production"
+    Robustly.report_exception_method = proc {|e| Errbase.report(e) }
   end
 
   def test_robustly_development_environment
@@ -44,6 +45,16 @@ class TestRobustly < Minitest::Test
       raise exception
     end
     assert mock.verify
+  end
+
+  def test_return_value
+    assert_equal 1, robustly { 1 }
+    assert_equal nil, robustly { raise Robustly::TestError }
+  end
+
+  def test_return_value_default
+    assert_equal 1, robustly(default: 2) { 1 }
+    assert_equal 2, robustly(default: 2) { raise Robustly::TestError }
   end
 
 end

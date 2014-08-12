@@ -1,4 +1,5 @@
 require "robustly/version"
+require "errbase"
 
 module Robustly
 
@@ -24,6 +25,7 @@ module Robustly
         if options[:throttle] ? rand < 1.0 / options[:throttle] : true
           Robustly.report_exception(e)
         end
+        options[:default]
       end
     end
     alias_method :yolo, :robustly
