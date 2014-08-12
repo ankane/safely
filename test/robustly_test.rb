@@ -52,9 +52,19 @@ class TestRobustly < Minitest::Test
     assert_equal nil, robustly { raise Robustly::TestError }
   end
 
-  def test_return_value_default
+  def test_default
     assert_equal 1, robustly(default: 2) { 1 }
     assert_equal 2, robustly(default: 2) { raise Robustly::TestError }
+  end
+
+  def test_only
+    assert_equal nil, robustly(only: Robustly::TestError) { raise Robustly::TestError }
+    assert_raises(RuntimeError, "Boom") { robustly(only: Robustly::TestError) { raise RuntimeError.new("Boom") } }
+  end
+
+  def test_only_array
+    assert_equal nil, robustly(only: [Robustly::TestError]) { raise Robustly::TestError }
+    assert_raises(RuntimeError, "Boom") { robustly(only: [Robustly::TestError]) { raise RuntimeError.new("Boom") } }
   end
 
 end

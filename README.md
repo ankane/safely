@@ -42,6 +42,14 @@ robustly default: 30 do
 end
 ```
 
+Catch specific errors
+
+```ruby
+robustly only: [ActiveRecord::RecordNotUnique] do
+  # all other exceptions will be raised
+end
+```
+
 ## Installation
 
 Add this line to your application’s Gemfile:
@@ -49,10 +57,6 @@ Add this line to your application’s Gemfile:
 ```ruby
 gem 'robustly'
 ```
-
-## TODO
-
-- ability to catch specific errors
 
 ## Contributing
 

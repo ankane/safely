@@ -18,9 +18,10 @@ module Robustly
   module Methods
 
     def robustly(options = {}, &block)
+      class_names = Array(options[:only] || StandardError)
       begin
         yield
-      rescue => e
+      rescue *class_names => e
         raise e if %w[development test].include?(Robustly.env)
         if options[:throttle] ? rand < 1.0 / options[:throttle] : true
           Robustly.report_exception(e)
