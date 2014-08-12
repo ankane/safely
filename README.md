@@ -18,7 +18,7 @@ yolo do
 end
 ```
 
-Reports exceptions to [Rollbar](https://rollbar.com/), [Honeybadger](https://www.honeybadger.io/), [Airbrake](https://airbrake.io/), [Exceptional](http://www.exceptional.io/), [Exception Notification](http://smartinez87.github.io/exception_notification/), and [Raygun](https://raygun.io/) out of the box thanks to [Errbase](https://github.com/ankane/errbase).
+Reports exceptions to [Rollbar](https://rollbar.com/), [Airbrake](https://airbrake.io/), [Exceptional](http://www.exceptional.io/), [Honeybadger](https://www.honeybadger.io/), [Sentry](https://getsentry.com/), [Raygun](https://raygun.io/), and [Bugsnag](https://bugsnag.com/) out of the box thanks to [Errbase](https://github.com/ankane/errbase).
 
 Customize reporting with:
 
