@@ -17,7 +17,7 @@ module Robustly
 
   module Methods
 
-    def robustly(options = {}, &block)
+    def safely(options = {}, &block)
       class_names = Array(options[:only] || StandardError)
       begin
         yield
@@ -29,7 +29,8 @@ module Robustly
         options[:default]
       end
     end
-    alias_method :yolo, :robustly
+    alias_method :yolo, :safely
+    alias_method :robustly, :safely # legacy
 
   end
 
