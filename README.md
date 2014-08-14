@@ -3,7 +3,7 @@
 Don’t let small errors bring down the system
 
 ```ruby
-robustly do
+safely do
   # keep going if this code fails
 end
 ```
@@ -29,7 +29,7 @@ Robustly.report_exception_method = proc {|e| Rollbar.report_exception(e) }
 And throttle reporting with:
 
 ```ruby
-robustly throttle: 1000 do
+safely throttle: 1000 do
   # reports ~ 1/1000 errors
 end
 ```
@@ -37,7 +37,7 @@ end
 Specify a default value to return on errors:
 
 ```ruby
-robustly default: 30 do
+safely default: 30 do
   # big bucks, no whammy
 end
 ```
@@ -45,7 +45,7 @@ end
 Catch specific errors
 
 ```ruby
-robustly only: ActiveRecord::RecordNotUnique do
+safely only: ActiveRecord::RecordNotUnique do
   # all other exceptions will be raised
 end
 ```
