@@ -24,7 +24,11 @@ module Robustly
       rescue *class_names => e
         raise e if %w[development test].include?(Robustly.env)
         if options[:throttle] ? rand < 1.0 / options[:throttle] : true
-          Robustly.report_exception(e)
+          begin
+            Robustly.report_exception(e)
+          rescue => e2
+            $stderr.puts "FAIL-SAFE #{e2.class.name}: #{e2.message}"
+          end
         end
         options[:default]
       end

@@ -78,4 +78,12 @@ class TestRobustly < Minitest::Test
     assert_raises(RuntimeError, "Boom") { safely(only: [Robustly::TestError]) { raise RuntimeError.new("Boom") } }
   end
 
+  def test_failsafe
+    Robustly.report_exception_method = proc {|e| raise "oops" }
+    out, err = capture_io do
+      safely { raise "boom" }
+    end
+    assert_equal "FAIL-SAFE RuntimeError: oops\n", err
+  end
+
 end
