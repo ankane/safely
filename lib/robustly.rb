@@ -4,7 +4,7 @@ require "errbase"
 module Robustly
 
   class << self
-    attr_accessor :env, :report_exception_method, :tag
+    attr_accessor :env, :report_exception_method
 
     def report_exception(e)
       report_exception_method.call(e)
@@ -12,7 +12,6 @@ module Robustly
   end
   self.env = ENV["RACK_ENV"] || ENV["RAILS_ENV"] || "development"
   self.report_exception_method = proc do |e|
-    e.message.prepend("[safely] ") if Robustly.tag && e.message
     Errbase.report(e)
   end
 
