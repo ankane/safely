@@ -2,7 +2,6 @@ require "robustly/version"
 require "errbase"
 
 module Robustly
-
   class << self
     attr_accessor :env, :report_exception_method
 
@@ -16,13 +15,12 @@ module Robustly
   end
 
   module Methods
-
-    def safely(options = {}, &block)
+    def safely(options = {})
       class_names = Array(options[:only] || StandardError)
       begin
         yield
       rescue *class_names => e
-        raise e if %w[development test].include?(Robustly.env)
+        raise e if %w(development test).include?(Robustly.env)
         if options[:throttle] ? rand < 1.0 / options[:throttle] : true
           begin
             Robustly.report_exception(e)
@@ -35,9 +33,7 @@ module Robustly
     end
     alias_method :yolo, :safely
     alias_method :robustly, :safely # legacy
-
   end
-
 end
 
 Object.send :include, Robustly::Methods

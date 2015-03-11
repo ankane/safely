@@ -1,10 +1,9 @@
 require_relative "test_helper"
 
 class TestRobustly < Minitest::Test
-
   def setup
     Robustly.env = "production"
-    Robustly.report_exception_method = proc {|e| Errbase.report(e) }
+    Robustly.report_exception_method = proc { |e| Errbase.report(e) }
   end
 
   def test_safely_development_environment
@@ -29,7 +28,7 @@ class TestRobustly < Minitest::Test
     exception = Robustly::TestError.new
     mock = MiniTest::Mock.new
     mock.expect :report_exception, nil, [exception]
-    Robustly.report_exception_method = proc {|e| mock.report_exception(e) }
+    Robustly.report_exception_method = proc { |e| mock.report_exception(e) }
     safely do
       raise exception
     end
@@ -40,7 +39,7 @@ class TestRobustly < Minitest::Test
     exception = Robustly::TestError.new
     mock = MiniTest::Mock.new
     mock.expect :report_exception, nil, [exception]
-    Robustly.report_exception_method = proc {|e| mock.report_exception(e) }
+    Robustly.report_exception_method = proc { |e| mock.report_exception(e) }
     yolo do
       raise exception
     end
@@ -51,7 +50,7 @@ class TestRobustly < Minitest::Test
     exception = Robustly::TestError.new
     mock = MiniTest::Mock.new
     mock.expect :report_exception, nil, [exception]
-    Robustly.report_exception_method = proc {|e| mock.report_exception(e) }
+    Robustly.report_exception_method = proc { |e| mock.report_exception(e) }
     robustly do
       raise exception
     end
@@ -79,11 +78,10 @@ class TestRobustly < Minitest::Test
   end
 
   def test_failsafe
-    Robustly.report_exception_method = proc {|e| raise "oops" }
+    Robustly.report_exception_method = proc { raise "oops" }
     out, err = capture_io do
       safely { raise "boom" }
     end
     assert_equal "FAIL-SAFE RuntimeError: oops\n", err
   end
-
 end
