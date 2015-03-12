@@ -44,7 +44,7 @@ safely raise: ActiveRecord::RecordNotUnique do
 end
 ```
 
-Rescue specific exceptions
+Rescue only specific exceptions
 
 ```ruby
 safely rescue: ActiveRecord::RecordNotUnique do
