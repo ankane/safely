@@ -12,18 +12,12 @@ Raises exceptions in development and test environments and rescues and reports e
 
 Also aliased as `yolo`.
 
-```ruby
-yolo do
-  # get crazy in here
-end
-```
-
 Reports exceptions to [Rollbar](https://rollbar.com/), [Airbrake](https://airbrake.io/), [Exceptional](http://www.exceptional.io/), [Honeybadger](https://www.honeybadger.io/), [Sentry](https://getsentry.com/), [Raygun](https://raygun.io/), and [Bugsnag](https://bugsnag.com/) out of the box thanks to [Errbase](https://github.com/ankane/errbase).
 
 Customize reporting with:
 
 ```ruby
-Robustly.report_exception_method = proc {|e| Rollbar.report_exception(e) }
+Robustly.report_exception_method = proc { |e| Rollbar.error(e) }
 ```
 
 And throttle reporting with:
