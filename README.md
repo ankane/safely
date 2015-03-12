@@ -29,12 +29,12 @@ Robustly.report_exception_method = proc {|e| Rollbar.report_exception(e) }
 And throttle reporting with:
 
 ```ruby
-safely throttle: 1000 do
+safely sample: 1000 do
   # reports ~ 1/1000 errors
 end
 ```
 
-Specify a default value to return on errors:
+Specify a default value to return on exceptions
 
 ```ruby
 safely default: 30 do
@@ -42,13 +42,23 @@ safely default: 30 do
 end
 ```
 
-Catch specific errors
+Raise specific exceptions
 
 ```ruby
-safely only: ActiveRecord::RecordNotUnique do
+safely raise: ActiveRecord::RecordNotUnique do
+  # all other exceptions will be rescued
+end
+```
+
+Rescue specific exceptions
+
+```ruby
+safely rescue: ActiveRecord::RecordNotUnique do
   # all other exceptions will be raised
 end
 ```
+
+Pass an array for multiple exception classes.
 
 ## Installation
 

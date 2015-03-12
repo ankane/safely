@@ -26,7 +26,7 @@ module Robustly
     rescue *Array(options[:rescue] || StandardError) => e
       raise e if Array(options[:raise]).any? { |c| e.is_a?(c) }
       raise e if %w(development test).include?(Robustly.env)
-      if options[:throttle] ? rand < 1.0 / options[:throttle] : true
+      if options[:sample] ? rand < 1.0 / options[:sample] : true
         begin
           Robustly.report_exception(e)
         rescue => e2
