@@ -22,23 +22,19 @@ module Robustly
 
   module Methods
     def safely(options = {})
-      class_names = Array(options[:only] || StandardError)
-      begin
-        yield
-      rescue *class_names => e
-        raise e if %w(development test).include?(Robustly.env)
-        if options[:throttle] ? rand < 1.0 / options[:throttle] : true
-          begin
-            Robustly.report_exception(e)
-          rescue => e2
-            $stderr.puts "FAIL-SAFE #{e2.class.name}: #{e2.message}"
-          end
+      yield
+    rescue *Array(options[:only] || StandardError) => e
+      raise e if %w(development test).include?(Robustly.env)
+      if options[:throttle] ? rand < 1.0 / options[:throttle] : true
+        begin
+          Robustly.report_exception(e)
+        rescue => e2
+          $stderr.puts "FAIL-SAFE #{e2.class.name}: #{e2.message}"
         end
-        options[:default]
       end
+      options[:default]
     end
     alias_method :yolo, :safely
-    alias_method :robustly, :safely # legacy
   end
 end
 

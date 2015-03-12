@@ -46,17 +46,6 @@ class TestRobustly < Minitest::Test
     assert mock.verify
   end
 
-  def test_robustly
-    exception = Robustly::TestError.new
-    mock = MiniTest::Mock.new
-    mock.expect :report_exception, nil, [exception]
-    Robustly.report_exception_method = proc { |e| mock.report_exception(e) }
-    robustly do
-      raise exception
-    end
-    assert mock.verify
-  end
-
   def test_return_value
     assert_equal 1, safely { 1 }
     assert_equal nil, safely { raise Robustly::TestError, "Boom" }
