@@ -3,16 +3,22 @@ require "errbase"
 
 module Robustly
   class << self
-    attr_accessor :env, :report_exception_method
+    attr_accessor :env, :tag, :report_exception_method
 
     def report_exception(e)
       report_exception_method.call(e)
     end
   end
-  self.env = ENV["RACK_ENV"] || ENV["RAILS_ENV"] || "development"
-  self.report_exception_method = proc do |e|
+
+  DEFAULT_EXCEPTION_METHOD = proc do |e|
+    e = e.dup # leave original exception unmodified
+    e.message.prepend("[safely] ") if e.message && Robustly.tag
     Errbase.report(e)
   end
+
+  self.env = ENV["RACK_ENV"] || ENV["RAILS_ENV"] || "development"
+  self.tag = true
+  self.report_exception_method = DEFAULT_EXCEPTION_METHOD
 
   module Methods
     def safely(options = {})

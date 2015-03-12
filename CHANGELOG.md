@@ -1,3 +1,3 @@
 ## 0.1.0 [unreleased]
 
-- Launched
+- Added `tag` option and tag exception message by default

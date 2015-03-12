@@ -3,7 +3,7 @@ require_relative "test_helper"
 class TestRobustly < Minitest::Test
   def setup
     Robustly.env = "production"
-    Robustly.report_exception_method = proc { |e| Errbase.report(e) }
+    Robustly.report_exception_method = Robustly::DEFAULT_EXCEPTION_METHOD
   end
 
   def test_safely_development_environment
@@ -59,22 +59,22 @@ class TestRobustly < Minitest::Test
 
   def test_return_value
     assert_equal 1, safely { 1 }
-    assert_equal nil, safely { raise Robustly::TestError }
+    assert_equal nil, safely { raise Robustly::TestError, "Boom" }
   end
 
   def test_default
     assert_equal 1, safely(default: 2) { 1 }
-    assert_equal 2, safely(default: 2) { raise Robustly::TestError }
+    assert_equal 2, safely(default: 2) { raise Robustly::TestError, "Boom" }
   end
 
   def test_only
     assert_equal nil, safely(only: Robustly::TestError) { raise Robustly::TestError }
-    assert_raises(RuntimeError, "Boom") { safely(only: Robustly::TestError) { raise RuntimeError.new("Boom") } }
+    assert_raises(RuntimeError, "Boom") { safely(only: Robustly::TestError) { raise RuntimeError, "Boom" } }
   end
 
   def test_only_array
     assert_equal nil, safely(only: [Robustly::TestError]) { raise Robustly::TestError }
-    assert_raises(RuntimeError, "Boom") { safely(only: [Robustly::TestError]) { raise RuntimeError.new("Boom") } }
+    assert_raises(RuntimeError, "Boom") { safely(only: [Robustly::TestError]) { raise RuntimeError, "Boom" } }
   end
 
   def test_failsafe
