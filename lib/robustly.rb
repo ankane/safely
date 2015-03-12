@@ -23,8 +23,8 @@ module Robustly
   module Methods
     def safely(options = {})
       yield
-    rescue *Array(options[:only] || StandardError) => e
-      raise e if Array(options[:except]).any? { |c| e.is_a?(c) }
+    rescue *Array(options[:rescue] || StandardError) => e
+      raise e if Array(options[:raise]).any? { |c| e.is_a?(c) }
       raise e if %w(development test).include?(Robustly.env)
       if options[:throttle] ? rand < 1.0 / options[:throttle] : true
         begin

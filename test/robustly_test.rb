@@ -56,18 +56,18 @@ class TestRobustly < Minitest::Test
     assert_equal 2, safely(default: 2) { raise Robustly::TestError, "Boom" }
   end
 
-  def test_only
-    assert_equal nil, safely(only: Robustly::TestError) { raise Robustly::TestError }
-    assert_raises(RuntimeError, "Boom") { safely(only: Robustly::TestError) { raise RuntimeError, "Boom" } }
+  def test_rescue
+    assert_equal nil, safely(rescue: Robustly::TestError) { raise Robustly::TestError }
+    assert_raises(RuntimeError, "Boom") { safely(rescue: Robustly::TestError) { raise RuntimeError, "Boom" } }
   end
 
-  def test_only_array
-    assert_equal nil, safely(only: [Robustly::TestError]) { raise Robustly::TestError }
-    assert_raises(RuntimeError, "Boom") { safely(only: [Robustly::TestError]) { raise RuntimeError, "Boom" } }
+  def test_rescue_array
+    assert_equal nil, safely(rescue: [Robustly::TestError]) { raise Robustly::TestError }
+    assert_raises(RuntimeError, "Boom") { safely(rescue: [Robustly::TestError]) { raise RuntimeError, "Boom" } }
   end
 
-  def test_except
-    assert_raises(Robustly::TestError, "Boom") { safely(except: StandardError) { raise Robustly::TestError, "Boom" } }
+  def test_raise
+    assert_raises(Robustly::TestError, "Boom") { safely(raise: StandardError) { raise Robustly::TestError, "Boom" } }
   end
 
   def test_failsafe
