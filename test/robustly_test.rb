@@ -66,6 +66,10 @@ class TestRobustly < Minitest::Test
     assert_raises(RuntimeError, "Boom") { safely(only: [Robustly::TestError]) { raise RuntimeError, "Boom" } }
   end
 
+  def test_except
+    assert_raises(Robustly::TestError, "Boom") { safely(except: StandardError) { raise Robustly::TestError, "Boom" } }
+  end
+
   def test_failsafe
     Robustly.report_exception_method = proc { raise "oops" }
     out, err = capture_io do
