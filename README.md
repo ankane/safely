@@ -72,7 +72,17 @@ safely(silence: ActiveRecord::RecordNotUnique) { code }
 
 ## Reporting
 
-Reports exceptions to [Rollbar](https://rollbar.com/), [Airbrake](https://airbrake.io/), [Exceptional](http://www.exceptional.io/), [Honeybadger](https://www.honeybadger.io/), [Sentry](https://getsentry.com/), [Raygun](https://raygun.io/), and [Bugsnag](https://bugsnag.com/) out of the box thanks to [Errbase](https://github.com/ankane/errbase).
+Reports exceptions to a variety of services out of the box thanks to [Errbase](https://github.com/ankane/errbase).
+
+- [Rollbar](https://rollbar.com/)
+- [Airbrake](https://airbrake.io/)
+- [Exceptional](http://www.exceptional.io/)
+- [Honeybadger](https://www.honeybadger.io/)
+- [Sentry](https://getsentry.com/)
+- [Raygun](https://raygun.io/)
+- [Bugsnag](https://bugsnag.com/)
+- [Appsignal](https://appsignal.com/)
+- [Opbeat](https://opbeat.com/)
 
 Customize reporting with:
 
