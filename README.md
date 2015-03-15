@@ -1,4 +1,4 @@
-# Robustly
+# Safely
 
 Unexpected data can cause errors in production - don’t let it bring down the system
 
@@ -87,13 +87,13 @@ Reports exceptions to a variety of services out of the box thanks to [Errbase](h
 Customize reporting with:
 
 ```ruby
-Robustly.report_exception_method = proc { |e| Rollbar.error(e) }
+Safely.report_exception_method = proc { |e| Rollbar.error(e) }
 ```
 
 By default, exception messages are prefixed with `[safely]`. This makes it easier to spot rescued exceptions. Turn this off with:
 
 ```ruby
-Robustly.tag = false
+Safely.tag = false
 ```
 
 ## Installation
@@ -101,18 +101,18 @@ Robustly.tag = false
 Add this line to your application’s Gemfile:
 
 ```ruby
-gem 'robustly'
+gem 'safely_block'
 ```
 
 ## History
 
-View the [changelog](https://github.com/ankane/robustly/blob/master/CHANGELOG.md)
+View the [changelog](https://github.com/ankane/safely/blob/master/CHANGELOG.md)
 
 ## Contributing
 
 Everyone is encouraged to help improve this project. Here are a few ways you can help:
 
-- [Report bugs](https://github.com/ankane/robustly/issues)
-- Fix bugs and [submit pull requests](https://github.com/ankane/robustly/pulls)
+- [Report bugs](https://github.com/ankane/safely/issues)
+- Fix bugs and [submit pull requests](https://github.com/ankane/safely/pulls)
 - Write, clarify, or fix documentation
 - Suggest or add new features

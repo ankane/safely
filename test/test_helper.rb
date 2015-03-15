@@ -3,6 +3,6 @@ Bundler.require(:default)
 require "minitest/autorun"
 require "minitest/pride"
 
-module Robustly
+module Safely
   class TestError < StandardError; end
 end

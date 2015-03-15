@@ -1,16 +1,16 @@
 # coding: utf-8
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "robustly/version"
+require "safely_block"
 
 Gem::Specification.new do |spec|
-  spec.name          = "robustly"
-  spec.version       = Robustly::VERSION
+  spec.name          = "safely_block"
+  spec.version       = Safely::VERSION
   spec.authors       = ["Andrew Kane"]
   spec.email         = ["andrew@chartkick.com"]
   spec.summary       = "Don’t let small errors bring down the system"
   spec.description   = "Don’t let small errors bring down the system"
-  spec.homepage      = "https://github.com/ankane/robustly"
+  spec.homepage      = "https://github.com/ankane/safely_block"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")

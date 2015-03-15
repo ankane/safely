@@ -1,7 +1,8 @@
-require "robustly/version"
 require "errbase"
 
-module Robustly
+module Safely
+  VERSION = "0.1.0"
+
   class << self
     attr_accessor :env, :raise_envs, :tag, :report_exception_method
 
@@ -12,7 +13,7 @@ module Robustly
 
   DEFAULT_EXCEPTION_METHOD = proc do |e|
     e = e.dup # leave original exception unmodified
-    e.message.prepend("[safely] ") if e.message && Robustly.tag
+    e.message.prepend("[safely] ") if e.message && Safely.tag
     Errbase.report(e)
   end
 
@@ -26,11 +27,11 @@ module Robustly
       yield
     rescue *Array(options[:only] || StandardError) => e
       raise e if Array(options[:except]).any? { |c| e.is_a?(c) }
-      raise e if Robustly.raise_envs.include?(Robustly.env)
-      sample = options[:sample] || options[:throttle]
+      raise e if Safely.raise_envs.include?(Safely.env)
+      sample = options[:sample]
       if sample ? rand < 1.0 / sample : true
         begin
-          Robustly.report_exception(e) unless Array(options[:silence]).any? { |c| e.is_a?(c) }
+          Safely.report_exception(e) unless Array(options[:silence]).any? { |c| e.is_a?(c) }
         rescue => e2
           $stderr.puts "FAIL-SAFE #{e2.class.name}: #{e2.message}"
         end
@@ -38,8 +39,7 @@ module Robustly
       options[:default]
     end
     alias_method :yolo, :safely
-    alias_method :robustly, :safely # legacy
   end
 end
 
-Object.send :include, Robustly::Methods
+Object.send :include, Safely::Methods
