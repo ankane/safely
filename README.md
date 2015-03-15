@@ -1,6 +1,6 @@
 # Safely
 
-Unexpected data can cause errors in production - don’t let it bring down the system
+Unexpected data can cause errors in production - don’t let it stop your code
 
 ```ruby
 safely do
