@@ -23,12 +23,13 @@ module Robustly
   module Methods
     def safely(options = {})
       yield
-    rescue *Array(options[:rescue] || StandardError) => e
-      raise e if Array(options[:raise]).any? { |c| e.is_a?(c) }
+    rescue *Array(options[:only] || StandardError) => e
+      raise e if Array(options[:except]).any? { |c| e.is_a?(c) }
       raise e if %w(development test).include?(Robustly.env)
-      if options[:sample] ? rand < 1.0 / options[:sample] : true
+      sample = options[:sample] || options[:throttle]
+      if sample ? rand < 1.0 / sample : true
         begin
-          Robustly.report_exception(e)
+          Robustly.report_exception(e) unless Array(options[:silence]).any? { |c| e.is_a?(c) }
         rescue => e2
           $stderr.puts "FAIL-SAFE #{e2.class.name}: #{e2.message}"
         end
@@ -36,6 +37,7 @@ module Robustly
       options[:default]
     end
     alias_method :yolo, :safely
+    alias_method :robustly, :safely # legacy
   end
 end
 
