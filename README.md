@@ -28,6 +28,12 @@ safely sample: 1000 do
 end
 ```
 
+By default, exception messages are prefixed with `[safely]`. Turn this off with:
+
+```ruby
+Robustly.tag = false
+```
+
 Specify a default value to return on exceptions
 
 ```ruby
@@ -44,6 +50,8 @@ safely except: ActiveRecord::RecordNotUnique do
 end
 ```
 
+Pass an array for multiple exception classes.
+
 Rescue only specific exceptions
 
 ```ruby
@@ -58,8 +66,6 @@ Silence exceptions
 safely silence: ActiveRecord::RecordNotUnique do
 end
 ```
-
-Pass an array for multiple exception classes.
 
 ## Installation
 
