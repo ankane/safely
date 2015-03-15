@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Safely::VERSION
   spec.authors       = ["Andrew Kane"]
   spec.email         = ["andrew@chartkick.com"]
-  spec.summary       = "Don’t let small errors bring down the system"
-  spec.description   = "Don’t let small errors bring down the system"
+  spec.summary       = "Awesome exception handling"
+  spec.description   = "Awesome exception handling"
   spec.homepage      = "https://github.com/ankane/safely_block"
   spec.license       = "MIT"
 

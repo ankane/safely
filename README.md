@@ -1,6 +1,6 @@
 # Safely
 
-Unexpected data can cause errors in production - don’t let it stop your code
+:fire: Awesome exception handling
 
 ```ruby
 safely do
@@ -8,23 +8,23 @@ safely do
 end
 ```
 
-Exceptions are rescued and reported to your favorite reporting service.
+Exceptions are rescued and automatically reported to your favorite reporting service.
 
 In development and test environments, exceptions are raised so you can fix them. :smirk:
 
-## Examples
+## Use It Everywhere
 
-Great for analytics
+“Oh no, analytics brought down search”
 
 ```ruby
-safely { track_event("Search") }
+safely { track_search(params) }
 ```
 
-and background jobs
+“Recommendations stopped updating because of one bad user”
 
 ```ruby
 User.find_each do |user|
-  safely { cache_recommendations(user) }
+  safely { update_recommendations(user) }
 end
 ```
 
