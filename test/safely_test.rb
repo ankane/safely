@@ -58,12 +58,12 @@ class TestSafely < Minitest::Test
 
   def test_only
     assert_equal nil, safely(only: Safely::TestError) { raise Safely::TestError }
-    assert_raises(RuntimeError, "Boom") { safely(only: Safely::TestError) { raise RuntimeError, "Boom" } }
+    assert_raises(RuntimeError, "Boom") { safely(only: Safely::TestError) { raise "Boom" } }
   end
 
   def test_only_array
     assert_equal nil, safely(only: [Safely::TestError]) { raise Safely::TestError }
-    assert_raises(RuntimeError, "Boom") { safely(only: [Safely::TestError]) { raise RuntimeError, "Boom" } }
+    assert_raises(RuntimeError, "Boom") { safely(only: [Safely::TestError]) { raise "Boom" } }
   end
 
   def test_except
