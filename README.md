@@ -43,7 +43,7 @@ end
 Specify a default value to return on exceptions
 
 ```ruby
-score = safely(default: 30) { calculate_score }
+show_banner = safely(default: true) { show_banner_logic }
 ```
 
 Raise specific exceptions
