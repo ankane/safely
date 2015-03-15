@@ -23,7 +23,7 @@ safely { track_search(params) }
 “Recommendations stopped updating because of one bad user”
 
 ```ruby
-User.find_each do |user|
+users.each do |user|
   safely { update_recommendations(user) }
 end
 ```
