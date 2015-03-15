@@ -20,18 +20,18 @@ Customize reporting with:
 Robustly.report_exception_method = proc { |e| Rollbar.error(e) }
 ```
 
-And throttle reporting with:
+By default, exception messages are prefixed with `[safely]`. This makes it easier to spot rescued exceptions. Turn this off with:
+
+```ruby
+Robustly.tag = false
+```
+
+Throttle reporting with:
 
 ```ruby
 safely sample: 1000 do
   # reports ~ 1/1000 errors
 end
-```
-
-By default, exception messages are prefixed with `[safely]`. Turn this off with:
-
-```ruby
-Robustly.tag = false
 ```
 
 Specify a default value to return on exceptions
