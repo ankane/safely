@@ -1,6 +1,6 @@
 # Robustly
 
-Don’t let small errors bring down the system
+Unexpected data can cause errors in production - don’t let it bring down the system
 
 ```ruby
 safely do
@@ -8,23 +8,29 @@ safely do
 end
 ```
 
-Raises exceptions in development and test environments and rescues and reports exceptions elsewhere.
+Exceptions are rescued and reported to your favorite reporting service.
+
+In development and test environments, exceptions are raised so you can fix them. :smirk:
+
+## Examples
+
+Great for analytics
+
+```ruby
+safely { track_event("Search") }
+```
+
+and background jobs
+
+```ruby
+User.find_each do |user|
+  safely { cache_recommendations(user) }
+end
+```
 
 Also aliased as `yolo`.
 
-Reports exceptions to [Rollbar](https://rollbar.com/), [Airbrake](https://airbrake.io/), [Exceptional](http://www.exceptional.io/), [Honeybadger](https://www.honeybadger.io/), [Sentry](https://getsentry.com/), [Raygun](https://raygun.io/), and [Bugsnag](https://bugsnag.com/) out of the box thanks to [Errbase](https://github.com/ankane/errbase).
-
-Customize reporting with:
-
-```ruby
-Robustly.report_exception_method = proc { |e| Rollbar.error(e) }
-```
-
-By default, exception messages are prefixed with `[safely]`. This makes it easier to spot rescued exceptions. Turn this off with:
-
-```ruby
-Robustly.tag = false
-```
+## Features
 
 Throttle reporting with:
 
@@ -37,9 +43,7 @@ end
 Specify a default value to return on exceptions
 
 ```ruby
-safely default: 30 do
-  # big bucks, no whammy
-end
+score = safely(default: 30) { calculate_score }
 ```
 
 Raise specific exceptions
@@ -63,8 +67,23 @@ end
 Silence exceptions
 
 ```ruby
-safely silence: ActiveRecord::RecordNotUnique do
-end
+safely(silence: ActiveRecord::RecordNotUnique) { code }
+```
+
+## Reporting
+
+Reports exceptions to [Rollbar](https://rollbar.com/), [Airbrake](https://airbrake.io/), [Exceptional](http://www.exceptional.io/), [Honeybadger](https://www.honeybadger.io/), [Sentry](https://getsentry.com/), [Raygun](https://raygun.io/), and [Bugsnag](https://bugsnag.com/) out of the box thanks to [Errbase](https://github.com/ankane/errbase).
+
+Customize reporting with:
+
+```ruby
+Robustly.report_exception_method = proc { |e| Rollbar.error(e) }
+```
+
+By default, exception messages are prefixed with `[safely]`. This makes it easier to spot rescued exceptions. Turn this off with:
+
+```ruby
+Robustly.tag = false
 ```
 
 ## Installation
