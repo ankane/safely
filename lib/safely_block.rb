@@ -12,13 +12,11 @@ module Safely
   end
 
   DEFAULT_EXCEPTION_METHOD = proc do |e|
-    e = e.dup # leave original exception unmodified
-    e.message.prepend("[safely] ") if e.message && Safely.tag
     Errbase.report(e)
   end
 
   self.env = ENV["RACK_ENV"] || ENV["RAILS_ENV"] || "development"
-  self.tag = true
+  self.tag = "safely"
   self.report_exception_method = DEFAULT_EXCEPTION_METHOD
   self.raise_envs = %w(development test)
 
@@ -31,6 +29,7 @@ module Safely
       sample = options[:sample]
       if sample ? rand < 1.0 / sample : true
         begin
+          e = prepend_with_tag(e, options[:tag])
           Safely.report_exception(e) unless Array(options[:silence]).any? { |c| e.is_a?(c) }
         rescue => e2
           $stderr.puts "FAIL-SAFE #{e2.class.name}: #{e2.message}"
@@ -39,6 +38,15 @@ module Safely
       options[:default]
     end
     alias_method :yolo, :safely
+
+    private
+    
+    def prepend_with_tag(e, tag_option)
+      e = e.dup # leave original exception unmodified
+      tag = tag_option || Safely.tag
+      e.message.prepend("[#{tag}] ") if e.message && tag
+      e
+    end
   end
 end
 

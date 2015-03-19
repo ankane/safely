@@ -96,6 +96,12 @@ By default, exception messages are prefixed with `[safely]`. This makes it easie
 Safely.tag = false
 ```
 
+You can also add custom tags to a safely block:
+
+```ruby
+safely(tag: "Issue123"){ code } #=> "[Issue123] Some Exception Message"
+```
+
 ## Installation
 
 Add this line to your application’s Gemfile:
