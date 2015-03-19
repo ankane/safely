@@ -75,6 +75,26 @@ class TestSafely < Minitest::Test
     assert true
   end
 
+  def test_default_tag
+    exception = Safely::TestError.new("Boom")
+    safely {raise exception}
+    assert_equal "[safely] Boom", exception.message
+  end
+
+  def test_no_tag
+    Safely.tag = false
+    exception = Safely::TestError.new("Boom")
+    safely {raise exception}
+    assert_equal "Boom", exception.message
+    Safely.tag = "safely"
+  end
+
+  def test_local_tag
+    exception = Safely::TestError.new("Boom")
+    safely(tag: "Issue 123"){raise exception}
+    assert_equal "[Issue 123] Boom", exception.message
+  end
+
   def test_failsafe
     Safely.report_exception_method = proc { raise "oops" }
     out, err = capture_io do
