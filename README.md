@@ -96,6 +96,12 @@ By default, exception messages are prefixed with `[safely]`. This makes it easie
 Safely.tag = false
 ```
 
+To report exceptions manually:
+
+```ruby
+Safely.report_exception(e)
+```
+
 ## Installation
 
 Add this line to your application’s Gemfile:
