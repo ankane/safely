@@ -1,8 +1,7 @@
+require "safely/version"
 require "errbase"
 
 module Safely
-  VERSION = "0.1.0"
-
   class << self
     attr_accessor :env, :raise_envs, :tag, :report_exception_method
 

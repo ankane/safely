@@ -1,7 +1,7 @@
 # coding: utf-8
-lib = File.expand_path("../lib", __FILE__)
+lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "safely_block"
+require 'safely/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "safely_block"
@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["andrew@chartkick.com"]
   spec.summary       = "Awesome exception handling"
   spec.description   = "Awesome exception handling"
-  spec.homepage      = "https://github.com/ankane/safely_block"
+  spec.homepage      = "https://github.com/ankane/safely"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
