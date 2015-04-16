@@ -1,3 +1,4 @@
+require "safely/version"
 require "errbase"
 
 module Safely

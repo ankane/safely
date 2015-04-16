@@ -1,4 +1,7 @@
-require File.expand_path("../lib/version.rb", __FILE__)
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'safely/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "safely_block"
