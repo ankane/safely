@@ -16,7 +16,7 @@ module Safely
     Errbase.report(e)
   end
 
-  self.env = ENV["RACK_ENV"] || ENV["RAILS_ENV"] || "development"
+  self.env = ENV["RAILS_ENV"] || ENV["RACK_ENV"] || "development"
   self.tag = true
   self.report_exception_method = DEFAULT_EXCEPTION_METHOD
   self.raise_envs = %w(development test)
