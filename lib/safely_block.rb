@@ -3,10 +3,15 @@ require "errbase"
 
 module Safely
   class << self
-    attr_accessor :env, :raise_envs, :tag, :report_exception_method
+    attr_accessor :raise_envs, :tag, :report_exception_method
+    attr_writer :env
 
     def report_exception(e)
       report_exception_method.call(e)
+    end
+
+    def env
+      @env ||= ENV["RAILS_ENV"] || ENV["RACK_ENV"] || "development"
     end
   end
 
@@ -16,7 +21,6 @@ module Safely
     Errbase.report(e)
   end
 
-  self.env = ENV["RAILS_ENV"] || ENV["RACK_ENV"] || "development"
   self.tag = true
   self.report_exception_method = DEFAULT_EXCEPTION_METHOD
   self.raise_envs = %w(development test)
