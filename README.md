@@ -1,7 +1,5 @@
 # Safely
 
-:fire: Awesome exception handling
-
 ```ruby
 safely do
   # keep going if this code fails
@@ -10,7 +8,7 @@ end
 
 Exceptions are rescued and automatically reported to your favorite reporting service.
 
-In development and test environments, exceptions are raised so you can fix them. :smirk:
+In development and test environments, exceptions are raised so you can fix them.
 
 ## Use It Everywhere
 
