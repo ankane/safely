@@ -82,4 +82,26 @@ class TestSafely < Minitest::Test
     end
     assert_equal "FAIL-SAFE RuntimeError: oops\n", err
   end
+
+  def test_throttle
+    count = 0
+    Safely.report_exception_method = proc { |e| count += 1 }
+    5.times do |n|
+      safely throttle: {limit: 2, period: 3600} do
+        raise Safely::TestError
+      end
+    end
+    assert_equal 2, count
+  end
+
+  def test_throttle_key
+    count = 0
+    Safely.report_exception_method = proc { |e| count += 1 }
+    5.times do |n|
+      safely throttle: {limit: 2, period: 3600, key: "boom#{n % 2}"} do
+        raise Safely::TestError
+      end
+    end
+    assert_equal 4, count
+  end
 end

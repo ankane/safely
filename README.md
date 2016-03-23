@@ -30,14 +30,6 @@ Also aliased as `yolo`.
 
 ## Features
 
-Throttle reporting with:
-
-```ruby
-safely sample: 1000 do
-  # reports ~ 1/1000 errors
-end
-```
-
 Specify a default value to return on exceptions
 
 ```ruby
@@ -67,6 +59,16 @@ Silence exceptions
 ```ruby
 safely(silence: ActiveRecord::RecordNotUnique) { code }
 ```
+
+Throttle reporting with: [master]
+
+```ruby
+safely throttle: {limit: 10, period: 1.minute} do
+  # reports only first 10 exceptions each minute
+end
+```
+
+**Note:** The throttle limit is approximate and per process.
 
 ## Reporting
 
