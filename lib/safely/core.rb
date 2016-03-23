@@ -16,8 +16,8 @@ module Safely
     end
 
     def throttled?(e, options)
-      return unless options
-      key = "#{options[:key] || Digest::MD5.hexdigest(e.backtrace.join("\n"))}/#{(Time.now.to_i / options[:period]) * options[:period]}"
+      return false unless options
+      key = "#{options[:key] || Digest::MD5.hexdigest([e.class.name, e.message, e.backtrace.join("\n")].join("/"))}/#{(Time.now.to_i / options[:period]) * options[:period]}"
       throttle_counter.clear if throttle_counter.size > 1000 # prevent from growing indefinitely
       (throttle_counter[key] += 1) > options[:limit]
     end
