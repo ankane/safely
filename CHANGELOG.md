@@ -1,7 +1,6 @@
 ## 0.1.1 [unreleased]
 
 - Added `Safely.safely` to not pollute when included in gems
-- Added `throttle` option
 
 ## 0.1.0
 
