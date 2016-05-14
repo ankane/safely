@@ -60,7 +60,7 @@ Silence exceptions
 safely(silence: ActiveRecord::RecordNotUnique) { code }
 ```
 
-Throttle reporting with: [master]
+Throttle reporting with:
 
 ```ruby
 safely throttle: {limit: 10, period: 1.minute} do
