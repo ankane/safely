@@ -54,4 +54,23 @@ module Safely
     alias_method :yolo, :safely
   end
   extend Methods
+
+  module ClassMethods
+    def safely_method(method_id, options = {})
+      original_method_id = :"_safely_method_#{method_id}"
+      alias_method original_method_id, method_id
+
+      define_method method_id do |*args, &blk|
+        safely(options) do
+          send(original_method_id, *args, &blk)
+        end
+      end
+
+      if private_instance_methods.include?(original_method_id)
+        private method_id
+      elsif protected_instance_methods.include?(original_method_id)
+        protected method_id
+      end
+    end
+  end
 end
