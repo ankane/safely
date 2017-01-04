@@ -74,15 +74,15 @@ end
 
 Reports exceptions to a variety of services out of the box thanks to [Errbase](https://github.com/ankane/errbase).
 
-- [Rollbar](https://rollbar.com/)
 - [Airbrake](https://airbrake.io/)
+- [Appsignal](https://appsignal.com/)
+- [Bugsnag](https://bugsnag.com/)
 - [Exceptional](http://www.exceptional.io/)
 - [Honeybadger](https://www.honeybadger.io/)
-- [Sentry](https://getsentry.com/)
-- [Raygun](https://raygun.io/)
-- [Bugsnag](https://bugsnag.com/)
-- [Appsignal](https://appsignal.com/)
 - [Opbeat](https://opbeat.com/)
+- [Raygun](https://raygun.io/)
+- [Rollbar](https://rollbar.com/)
+- [Sentry](https://getsentry.com/)
 
 Customize reporting with:
 
