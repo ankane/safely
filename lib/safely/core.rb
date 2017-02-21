@@ -24,8 +24,6 @@ module Safely
   end
 
   DEFAULT_EXCEPTION_METHOD = proc do |e|
-    e = e.dup # leave original exception unmodified
-    e.message.prepend("[safely] ") if e.message && Safely.tag
     Errbase.report(e)
   end
 
@@ -44,7 +42,16 @@ module Safely
       sample = options[:sample]
       if sample ? rand < 1.0 / sample : true
         begin
-          Safely.report_exception(e) unless Array(options[:silence]).any? { |c| e.is_a?(c) } || Safely.throttled?(e, options[:throttle])
+          unless Array(options[:silence]).any? { |c| e.is_a?(c) } || Safely.throttled?(e, options[:throttle])
+            if Safely.tag && e.message
+              e = e.dup # leave original exception unmodified
+              message = e.message
+              e.define_singleton_method(:message) do
+                "[safely] #{message}"
+              end
+            end
+            Safely.report_exception(e)
+          end
         rescue => e2
           $stderr.puts "FAIL-SAFE #{e2.class.name}: #{e2.message}"
         end
