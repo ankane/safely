@@ -48,7 +48,7 @@ class TestSafely < Minitest::Test
 
   def test_return_value
     assert_equal 1, safely { 1 }
-    assert_equal nil, safely { raise Safely::TestError, "Boom" }
+    assert_nil safely { raise Safely::TestError, "Boom" }
   end
 
   def test_default
@@ -57,12 +57,12 @@ class TestSafely < Minitest::Test
   end
 
   def test_only
-    assert_equal nil, safely(only: Safely::TestError) { raise Safely::TestError }
+    assert_nil safely(only: Safely::TestError) { raise Safely::TestError }
     assert_raises(RuntimeError, "Boom") { safely(only: Safely::TestError) { raise "Boom" } }
   end
 
   def test_only_array
-    assert_equal nil, safely(only: [Safely::TestError]) { raise Safely::TestError }
+    assert_nil safely(only: [Safely::TestError]) { raise Safely::TestError }
     assert_raises(RuntimeError, "Boom") { safely(only: [Safely::TestError]) { raise "Boom" } }
   end
 
