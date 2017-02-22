@@ -127,4 +127,10 @@ class TestSafely < Minitest::Test
     end
     assert_equal 4, count
   end
+
+  def test_bad_argument
+    assert_raises(ArgumentError) do
+      safely(unknown: true) { }
+    end
+  end
 end
