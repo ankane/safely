@@ -62,6 +62,13 @@ class TestSafely < Minitest::Test
     assert_equal "Boom", ex.message
   end
 
+  def test_local_tag
+    ex = nil
+    Safely.report_exception_method = -> (e) { ex = e }
+    safely(tag: "hi") { raise Safely::TestError, "Boom" }
+    assert_equal "[hi] Boom", ex.message
+  end
+
   def test_return_value
     assert_equal 1, safely { 1 }
     assert_nil safely { raise Safely::TestError, "Boom" }

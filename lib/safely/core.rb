@@ -43,11 +43,12 @@ module Safely
       if sample ? rand < 1.0 / sample : true
         begin
           unless Array(options[:silence]).any? { |c| e.is_a?(c) } || Safely.throttled?(e, options[:throttle])
-            if Safely.tag && e.message
+            tag = options.key?(:tag) ? options[:tag] : Safely.tag
+            if tag && e.message
               e = e.dup # leave original exception unmodified
               message = e.message
               e.define_singleton_method(:message) do
-                "[safely] #{message}"
+                "[#{tag == true ? "safely" : tag}] #{message}"
               end
             end
             Safely.report_exception(e)

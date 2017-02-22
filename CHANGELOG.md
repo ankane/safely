@@ -1,5 +1,6 @@
 ## 0.2.0 [unreleased]
 
+- Added `tag` option to `safely` method
 - Fixed frozen string error
 - Fixed tagging with custom error handler
 
