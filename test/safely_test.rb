@@ -29,7 +29,7 @@ class TestSafely < Minitest::Test
     exception = Safely::TestError.new
     mock = MiniTest::Mock.new
     mock.expect :report_exception, nil, [exception]
-    Safely.report_exception_method = proc { |e| mock.report_exception(e) }
+    Safely.report_exception_method = -> (e) { mock.report_exception(e) }
     safely do
       raise exception
     end
@@ -40,7 +40,7 @@ class TestSafely < Minitest::Test
     exception = Safely::TestError.new
     mock = MiniTest::Mock.new
     mock.expect :report_exception, nil, [exception]
-    Safely.report_exception_method = proc { |e| mock.report_exception(e) }
+    Safely.report_exception_method = -> (e) { mock.report_exception(e) }
     yolo do
       raise exception
     end
@@ -49,7 +49,7 @@ class TestSafely < Minitest::Test
 
   def test_tagged
     ex = nil
-    Safely.report_exception_method = proc { |e| ex = e }
+    Safely.report_exception_method = -> (e) { ex = e }
     safely { raise Safely::TestError, "Boom" }
     assert_equal "[safely] Boom", ex.message
   end
@@ -57,7 +57,7 @@ class TestSafely < Minitest::Test
   def test_not_tagged
     Safely.tag = false
     ex = nil
-    Safely.report_exception_method = proc { |e| ex = e }
+    Safely.report_exception_method = -> (e) { ex = e }
     safely { raise Safely::TestError, "Boom" }
     assert_equal "Boom", ex.message
   end
@@ -92,8 +92,8 @@ class TestSafely < Minitest::Test
   end
 
   def test_failsafe
-    Safely.report_exception_method = proc { raise "oops" }
-    out, err = capture_io do
+    Safely.report_exception_method = -> (_) { raise "oops" }
+    _, err = capture_io do
       safely { raise "boom" }
     end
     assert_equal "FAIL-SAFE RuntimeError: oops\n", err
@@ -101,7 +101,7 @@ class TestSafely < Minitest::Test
 
   def test_throttle
     count = 0
-    Safely.report_exception_method = proc { |e| count += 1 }
+    Safely.report_exception_method = -> (_) { count += 1 }
     5.times do |n|
       safely throttle: {limit: 2, period: 3600} do
         raise Safely::TestError
@@ -112,7 +112,7 @@ class TestSafely < Minitest::Test
 
   def test_throttle_key
     count = 0
-    Safely.report_exception_method = proc { |e| count += 1 }
+    Safely.report_exception_method = -> (_) { count += 1 }
     5.times do |n|
       safely throttle: {limit: 2, period: 3600, key: "boom#{n % 2}"} do
         raise Safely::TestError
