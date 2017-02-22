@@ -3,6 +3,7 @@ require_relative "test_helper"
 class TestSafely < Minitest::Test
   def setup
     Safely.env = "production"
+    Safely.tag = true
     Safely.report_exception_method = Safely::DEFAULT_EXCEPTION_METHOD
   end
 
@@ -44,6 +45,21 @@ class TestSafely < Minitest::Test
       raise exception
     end
     assert mock.verify
+  end
+
+  def test_tagged
+    ex = nil
+    Safely.report_exception_method = proc { |e| ex = e }
+    safely { raise Safely::TestError, "Boom" }
+    assert_equal "[safely] Boom", ex.message
+  end
+
+  def test_not_tagged
+    Safely.tag = false
+    ex = nil
+    Safely.report_exception_method = proc { |e| ex = e }
+    safely { raise Safely::TestError, "Boom" }
+    assert_equal "Boom", ex.message
   end
 
   def test_return_value
