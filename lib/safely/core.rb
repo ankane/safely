@@ -34,16 +34,15 @@ module Safely
   self.throttle_counter = Hash.new(0)
 
   module Methods
-    def safely(options = {})
+    def safely(tag: nil, sample: nil, except: nil, only: nil, silence: nil, throttle: false, default: nil)
       yield
-    rescue *Array(options[:only] || StandardError) => e
-      raise e if Array(options[:except]).any? { |c| e.is_a?(c) }
+    rescue *Array(only || StandardError) => e
+      raise e if Array(except).any? { |c| e.is_a?(c) }
       raise e if Safely.raise_envs.include?(Safely.env)
-      sample = options[:sample]
       if sample ? rand < 1.0 / sample : true
         begin
-          unless Array(options[:silence]).any? { |c| e.is_a?(c) } || Safely.throttled?(e, options[:throttle])
-            tag = options.key?(:tag) ? options[:tag] : Safely.tag
+          unless Array(silence).any? { |c| e.is_a?(c) } || Safely.throttled?(e, throttle)
+            tag = Safely.tag if tag.nil?
             if tag && e.message
               e = e.dup # leave original exception unmodified
               message = e.message
@@ -57,7 +56,7 @@ module Safely
           $stderr.puts "FAIL-SAFE #{e2.class.name}: #{e2.message}"
         end
       end
-      options[:default]
+      default
     end
     alias_method :yolo, :safely
   end
