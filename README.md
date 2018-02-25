@@ -10,6 +10,8 @@ Exceptions are rescued and automatically reported to your favorite reporting ser
 
 In development and test environments, exceptions are raised so you can fix them.
 
+[![Build Status](https://travis-ci.org/ankane/safely.svg?branch=master)](https://travis-ci.org/ankane/safely)
+
 ## Use It Everywhere
 
 “Oh no, analytics brought down search”
