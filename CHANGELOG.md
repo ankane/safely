@@ -1,3 +1,7 @@
+## 0.2.1 [unreleased]
+
+- Tag exceptions reported with `report_exception`
+
 ## 0.2.0
 
 - Added `tag` option to `safely` method

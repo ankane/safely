@@ -7,7 +7,15 @@ module Safely
     attr_accessor :raise_envs, :tag, :report_exception_method, :throttle_counter
     attr_writer :env
 
-    def report_exception(e)
+    def report_exception(e, tag: nil)
+      tag = Safely.tag if tag.nil?
+      if tag && e.message
+        e = e.dup # leave original exception unmodified
+        message = e.message
+        e.define_singleton_method(:message) do
+          "[#{tag == true ? "safely" : tag}] #{message}"
+        end
+      end
       report_exception_method.call(e)
     end
 
@@ -42,15 +50,7 @@ module Safely
       if sample ? rand < 1.0 / sample : true
         begin
           unless Array(silence).any? { |c| e.is_a?(c) } || Safely.throttled?(e, throttle)
-            tag = Safely.tag if tag.nil?
-            if tag && e.message
-              e = e.dup # leave original exception unmodified
-              message = e.message
-              e.define_singleton_method(:message) do
-                "[#{tag == true ? "safely" : tag}] #{message}"
-              end
-            end
-            Safely.report_exception(e)
+            Safely.report_exception(e, tag: tag)
           end
         rescue => e2
           $stderr.puts "FAIL-SAFE #{e2.class.name}: #{e2.message}"
