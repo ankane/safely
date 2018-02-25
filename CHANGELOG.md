@@ -1,4 +1,4 @@
-## 0.2.1 [unreleased]
+## 0.2.1
 
 - Tag exceptions reported with `report_exception`
 
