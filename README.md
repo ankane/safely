@@ -117,7 +117,7 @@ gem 'safely_block'
 
 ## Privacy
 
-To protect the privacy of your users, do not send personal data to exception services. Filter sensitive form fields and use ids - not email addresses - to identify users.
+To protect the privacy of your users, do not send personal data to exception services. Filter sensitive form fields and use ids to identify users.
 
 ## History
 
