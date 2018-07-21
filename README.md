@@ -117,7 +117,17 @@ gem 'safely_block'
 
 ## Privacy
 
-To protect the privacy of your users, do not send personal data to exception services. Filter sensitive form fields and use ids to identify users.
+To protect the privacy of your users, do not send [personal data](https://en.wikipedia.org/wiki/Personally_identifiable_information) to exception services. Filter sensitive form fields, use ids to identify users, and mask IP addresses.
+
+With Rollbar, you can do:
+
+```ruby
+Rollbar.configure do |config|
+  config.person_id_method = "id" # default
+  config.scrub_fields |= [:birthday]
+  config.anonymize_user_ip = true
+end
+```
 
 ## History
 
