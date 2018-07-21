@@ -115,6 +115,10 @@ Add this line to your application’s Gemfile:
 gem 'safely_block'
 ```
 
+## Privacy
+
+To protect the privacy of your users, do not send personal data to exception services. Filter sensitive form fields and use ids - not email addresses - to identify users.
+
 ## History
 
 View the [changelog](https://github.com/ankane/safely/blob/master/CHANGELOG.md)
