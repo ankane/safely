@@ -129,6 +129,8 @@ Rollbar.configure do |config|
 end
 ```
 
+While working on exceptions, be on the lookout for personal data and correct as needed.
+
 ## History
 
 View the [changelog](https://github.com/ankane/safely/blob/master/CHANGELOG.md)
