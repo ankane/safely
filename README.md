@@ -115,7 +115,7 @@ Add this line to your application’s Gemfile:
 gem 'safely_block'
 ```
 
-## Privacy
+## Data Protection
 
 To protect the privacy of your users, do not send [personal data](https://en.wikipedia.org/wiki/Personally_identifiable_information) to exception services. Filter sensitive form fields, use ids (not email addresses) to identify users, and mask IP addresses.
 
