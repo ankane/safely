@@ -74,6 +74,26 @@ end
 
 **Note:** The throttle limit is approximate and per process.
 
+Wrap a method
+
+```ruby
+def foo
+  # your code
+end
+safely_method :foo
+```
+
+will wrap the `foo` method content inside a `safely` block.
+
+Also, you can pass any options to the `safely` method like this:
+
+```ruby
+def foo
+  # your code
+end
+safely_method :foo, default: "bar"
+```
+
 ## Reporting
 
 Reports exceptions to a variety of services out of the box thanks to [Errbase](https://github.com/ankane/errbase).
