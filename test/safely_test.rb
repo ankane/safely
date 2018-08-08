@@ -120,7 +120,7 @@ class TestSafely < Minitest::Test
   def test_throttle
     count = 0
     Safely.report_exception_method = -> (_) { count += 1 }
-    5.times do |n|
+    5.times do
       safely throttle: {limit: 2, period: 3600} do
         raise Safely::TestError
       end
