@@ -14,6 +14,14 @@ In development and test environments, exceptions are raised so you can fix them.
 
 [![Build Status](https://travis-ci.org/ankane/safely.svg?branch=master)](https://travis-ci.org/ankane/safely)
 
+## Installation
+
+Add this line to your application’s Gemfile:
+
+```ruby
+gem 'safely_block'
+```
+
 ## Use It Everywhere
 
 “Oh no, analytics brought down search”
@@ -107,14 +115,6 @@ To report exceptions manually:
 
 ```ruby
 Safely.report_exception(e)
-```
-
-## Installation
-
-Add this line to your application’s Gemfile:
-
-```ruby
-gem 'safely_block'
 ```
 
 ## Data Protection
