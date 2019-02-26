@@ -7,7 +7,7 @@ module Safely
     attr_accessor :raise_envs, :tag, :report_exception_method, :throttle_counter
     attr_writer :env
 
-    def report_exception(e, tag: nil)
+    def report_exception(e, tag: nil, context: {})
       tag = Safely.tag if tag.nil?
       if tag && e.message
         e = e.dup # leave original exception unmodified
@@ -16,7 +16,11 @@ module Safely
           "[#{tag == true ? "safely" : tag}] #{message}"
         end
       end
-      report_exception_method.call(e)
+      if report_exception_method.arity == 1
+        report_exception_method.call(e)
+      else
+        report_exception_method.call(e, context)
+      end
     end
 
     def env
@@ -31,8 +35,8 @@ module Safely
     end
   end
 
-  DEFAULT_EXCEPTION_METHOD = proc do |e|
-    Errbase.report(e)
+  DEFAULT_EXCEPTION_METHOD = proc do |e, context|
+    Errbase.report(e, context)
   end
 
   self.tag = true
@@ -42,7 +46,7 @@ module Safely
   self.throttle_counter = Hash.new(0)
 
   module Methods
-    def safely(tag: nil, sample: nil, except: nil, only: nil, silence: nil, throttle: false, default: nil)
+    def safely(tag: nil, sample: nil, except: nil, only: nil, silence: nil, throttle: false, default: nil, context: {})
       yield
     rescue *Array(only || StandardError) => e
       raise e if Array(except).any? { |c| e.is_a?(c) }
@@ -50,7 +54,7 @@ module Safely
       if sample ? rand < 1.0 / sample : true
         begin
           unless Array(silence).any? { |c| e.is_a?(c) } || Safely.throttled?(e, throttle)
-            Safely.report_exception(e, tag: tag)
+            Safely.report_exception(e, tag: tag, context: context)
           end
         rescue => e2
           $stderr.puts "FAIL-SAFE #{e2.class.name}: #{e2.message}"

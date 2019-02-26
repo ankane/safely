@@ -1,3 +1,7 @@
+## 0.2.2 [unreleased]
+
+- Added `context` option
+
 ## 0.2.1
 
 - Tag exceptions reported with `report_exception`

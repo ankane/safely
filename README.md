@@ -42,6 +42,14 @@ Also aliased as `yolo`.
 
 ## Features
 
+Pass extra context to be reported with exceptions [master]
+
+```ruby
+safely context: {user_id: 123} do
+  # code
+end
+```
+
 Specify a default value to return on exceptions
 
 ```ruby
