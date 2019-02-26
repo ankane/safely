@@ -1,9 +1,6 @@
+dist: xenial
 language: ruby
-rvm: 2.4.2
-gemfile:
-  - Gemfile
-sudo: false
-before_install: gem install bundler
+rvm: 2.5.3
 script: bundle exec rake test
 notifications:
   email:
