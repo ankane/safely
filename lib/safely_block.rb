@@ -1,3 +1,3 @@
 require "safely/core"
 
-Object.send :include, Safely::Methods
+Object.include Safely::Methods
