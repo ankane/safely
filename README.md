@@ -110,7 +110,7 @@ Reports exceptions to a variety of services out of the box thanks to [Errbase](h
 Customize reporting with:
 
 ```ruby
-Safely.report_exception_method = -> (e) { Rollbar.error(e) }
+Safely.report_exception_method = ->(e) { Rollbar.error(e) }
 ```
 
 By default, exception messages are prefixed with `[safely]`. This makes it easier to spot rescued exceptions. Turn this off with:
