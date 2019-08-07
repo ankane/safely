@@ -80,6 +80,15 @@ class TestSafely < Minitest::Test
     assert_equal "[safely] Boom", ex.message
   end
 
+  def test_context
+    context = nil
+    Safely.report_exception_method = -> (e, ctx) { context = ctx }
+    safely context: {user_id: 123} do
+      raise Safely::TestError, "Boom"
+    end
+    assert_equal ({user_id: 123}), context
+  end
+
   def test_return_value
     assert_equal 1, safely { 1 }
     assert_nil safely { raise Safely::TestError, "Boom" }
