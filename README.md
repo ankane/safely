@@ -42,7 +42,7 @@ Also aliased as `yolo`.
 
 ## Features
 
-Pass extra context to be reported with exceptions [master]
+Pass extra context to be reported with exceptions
 
 ```ruby
 safely context: {user_id: 123} do
