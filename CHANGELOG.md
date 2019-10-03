@@ -1,3 +1,7 @@
+## 0.3.0 [unreleased]
+
+- Made `safely` method private to behave like `Kernel` methods
+
 ## 0.2.2
 
 - Added `context` option

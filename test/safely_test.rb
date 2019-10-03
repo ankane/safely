@@ -153,4 +153,10 @@ class TestSafely < Minitest::Test
       safely(unknown: true) { }
     end
   end
+
+  def test_respond_to?
+    assert !nil.respond_to?(:safely)
+    assert !nil.respond_to?(:yolo)
+    assert Safely.respond_to?(:safely)
+  end
 end
