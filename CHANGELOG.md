@@ -1,4 +1,4 @@
-## 0.3.0 [unreleased]
+## 0.3.0
 
 - Made `safely` method private to behave like `Kernel` methods
 
