@@ -1,4 +1,10 @@
+[![Build Status](https://travis-ci.org/ankane/safely.svg?branch=master)](https://travis-ci.org/ankane/safely)
+
 # Safely
+
+Safely is an implementation of the [Safely pattern](https://ankane.org/safely-pattern) for Ruby. This is a way of dealing with exceptions safely (!) while keeping your code DRY. Raise exceptions while you're working but protect your end-users from seeing them, without rewriting your code.
+
+Safely wraps your code in a block like this to protect your users from exceptions:
 
 ```ruby
 safely do
@@ -6,13 +12,9 @@ safely do
 end
 ```
 
-Exceptions are rescued and automatically reported to your favorite reporting service.
-
-In development and test environments, exceptions are raised so you can fix them.
+When your code is wrapped like this, exceptions will be rescued and optionally reported to your favorite reporting service when running on your live environment. In development and test environments, however, exceptions are still raised so you can fix them.
 
 [Read more](https://ankane.org/safely-pattern)
-
-[![Build Status](https://travis-ci.org/ankane/safely.svg?branch=master)](https://travis-ci.org/ankane/safely)
 
 ## Installation
 
@@ -23,6 +25,8 @@ gem 'safely_block'
 ```
 
 ## Use It Everywhere
+
+Safely is best if you use it everywhere your code might raise an exception.
 
 “Oh no, analytics brought down search”
 
@@ -38,11 +42,11 @@ users.each do |user|
 end
 ```
 
-Also aliased as `yolo`.
+`safely` is also aliased as `yolo`.
 
-## Features
+## Configuration
 
-Pass extra context to be reported with exceptions
+Pass extra context to be reported with exceptions:
 
 ```ruby
 safely context: {user_id: 123} do
@@ -50,13 +54,13 @@ safely context: {user_id: 123} do
 end
 ```
 
-Specify a default value to return on exceptions
+Specify a default value to return on exceptions:
 
 ```ruby
 show_banner = safely(default: true) { show_banner_logic }
 ```
 
-Raise specific exceptions
+Suppress specific exceptions by passing their name (or names in an array):
 
 ```ruby
 safely except: ActiveRecord::RecordNotUnique do
@@ -64,9 +68,7 @@ safely except: ActiveRecord::RecordNotUnique do
 end
 ```
 
-Pass an array for multiple exception classes.
-
-Rescue only specific exceptions
+Rescue only specific exceptions by passing their name (or names in an array):
 
 ```ruby
 safely only: ActiveRecord::RecordNotUnique do
@@ -74,7 +76,7 @@ safely only: ActiveRecord::RecordNotUnique do
 end
 ```
 
-Silence exceptions
+Silence exceptions by passing their name (or names in an array):
 
 ```ruby
 safely silence: ActiveRecord::RecordNotUnique do
@@ -82,7 +84,7 @@ safely silence: ActiveRecord::RecordNotUnique do
 end
 ```
 
-Throttle reporting with:
+Throttle reporting:
 
 ```ruby
 safely throttle: {limit: 10, period: 1.minute} do
@@ -94,7 +96,7 @@ end
 
 ## Reporting
 
-Reports exceptions to a variety of services out of the box thanks to [Errbase](https://github.com/ankane/errbase).
+Safely-block allows you to report exceptions to a variety of services out of the box thanks to [Errbase](https://github.com/ankane/errbase).
 
 - [Airbrake](https://airbrake.io/)
 - [Appsignal](https://appsignal.com/)
@@ -107,19 +109,23 @@ Reports exceptions to a variety of services out of the box thanks to [Errbase](h
 - [Rollbar](https://rollbar.com/)
 - [Sentry](https://getsentry.com/)
 
-Customize reporting with:
+Customize reporting by adding a configuration line to an initializer (`config/initializers/safely.rb`):
 
 ```ruby
-Safely.report_exception_method = ->(e) { Rollbar.error(e) }
+# frozen_string_literal: true
+
+Rails.application.configure do
+  Safely.report_exception_method = ->(e) { Rollbar.error(e) } if ENV['RAILS_ENV'] == 'production'
+end
 ```
 
-By default, exception messages are prefixed with `[safely]`. This makes it easier to spot rescued exceptions. Turn this off with:
+By default, exception messages are prefixed with `[safely]`. This makes it easier to spot rescued exceptions. Turn this off in your initializer with:
 
 ```ruby
 Safely.tag = false
 ```
 
-To report exceptions manually:
+To report exceptions manually, use this method in your code:
 
 ```ruby
 Safely.report_exception(e)
