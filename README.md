@@ -113,6 +113,8 @@ Customize reporting with:
 Safely.report_exception_method = ->(e) { Rollbar.error(e) }
 ```
 
+With Rails, you can add this in an initializer.
+
 By default, exception messages are prefixed with `[safely]`. This makes it easier to spot rescued exceptions. Turn this off with:
 
 ```ruby
