@@ -162,5 +162,5 @@ To get started with development and testing:
 git clone https://github.com/ankane/safely.git
 cd safely
 bundle install
-rake test
+bundle exec rake test
 ```
