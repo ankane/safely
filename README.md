@@ -12,7 +12,7 @@ In development and test environments, exceptions are raised so you can fix them.
 
 [Read more](https://ankane.org/safely-pattern)
 
-[![Build Status](https://travis-ci.org/ankane/safely.svg?branch=master)](https://travis-ci.org/ankane/safely)
+[![Build Status](https://github.com/ankane/safely/workflows/build/badge.svg?branch=master)](https://github.com/ankane/safely/actions)
 
 ## Installation
 
