@@ -1,12 +1,6 @@
 require_relative "test_helper"
 
-class TestSafely < Minitest::Test
-  def setup
-    Safely.env = "production"
-    Safely.tag = true
-    Safely.report_exception_method = Safely::DEFAULT_EXCEPTION_METHOD
-  end
-
+class SafelyTest < Minitest::Test
   def test_development_environment
     Safely.env = "development"
     assert_raises(Safely::TestError) do
