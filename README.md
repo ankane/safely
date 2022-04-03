@@ -19,7 +19,7 @@ In development and test environments, exceptions are raised so you can fix them.
 Add this line to your application’s Gemfile:
 
 ```ruby
-gem 'safely_block'
+gem "safely_block"
 ```
 
 ## Use It Everywhere
