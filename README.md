@@ -34,11 +34,11 @@ safely { track_search(params) }
 
 ```ruby
 users.each do |user|
-  safely { update_recommendations(user) }
+  safely(context: {user_id: user.id}) { update_recommendations(user) }
 end
 ```
 
-Also aliased as `yolo`.
+Also aliased as `yolo`
 
 ## Features
 
