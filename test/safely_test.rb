@@ -1,35 +1,6 @@
 require_relative "test_helper"
 
 class SafelyTest < Minitest::Test
-  def test_development_environment
-    Safely.env = "development"
-    assert_raises(Safely::TestError) do
-      safely do
-        raise Safely::TestError
-      end
-    end
-  end
-
-  def test_test_environment
-    Safely.env = "test"
-    assert_raises(Safely::TestError) do
-      safely do
-        raise Safely::TestError
-      end
-    end
-  end
-
-  def test_production_environment
-    exception = Safely::TestError.new
-    mock = MiniTest::Mock.new
-    mock.expect :report_exception, nil, [exception]
-    Safely.report_exception_method = -> (e) { mock.report_exception(e) }
-    safely do
-      raise exception
-    end
-    assert mock.verify
-  end
-
   def test_yolo
     exception = Safely::TestError.new
     mock = MiniTest::Mock.new
