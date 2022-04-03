@@ -65,22 +65,4 @@ module Safely
     alias_method :yolo, :safely
   end
   extend Methods
-
-  # add to Enumerator instead of Enumerable
-  # so classes that include Enumerable are not affected
-  # it also makes code more clear - [].each.safely instead of [].safely
-  module EnumeratorMethods
-    def safely(**options)
-      # raise error instead of
-      # return to_enum(__method__, **options) unless block_given?
-      # since safely.map returns unexpected results - see skipped test case
-      raise ArgumentError, "tried to call safely on Enumerator without a block" unless block_given?
-
-      each do |*v|
-        Safely.safely(**options) do
-          yield(*v)
-        end
-      end
-    end
-  end
 end

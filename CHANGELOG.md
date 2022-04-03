@@ -1,7 +1,3 @@
-## 0.4.0 (unreleased)
-
-- Added `Enumerator` method
-
 ## 0.3.0 (2019-10-28)
 
 - Made `safely` method private to behave like `Kernel` methods
