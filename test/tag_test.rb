@@ -1,13 +1,13 @@
 require_relative "test_helper"
 
 class TagTest < Minitest::Test
-  def test_tagged
+  def test_default
     assert_message("[safely] Boom") do
       safely { raise Safely::TestError, "Boom" }
     end
   end
 
-  def test_not_tagged
+  def test_global
     Safely.tag = false
     assert_message("Boom") do
       safely { raise Safely::TestError, "Boom" }
@@ -16,13 +16,13 @@ class TagTest < Minitest::Test
     Safely.tag = true
   end
 
-  def test_local_tag
+  def test_local
     assert_message("[hi] Boom") do
       safely(tag: "hi") { raise Safely::TestError, "Boom" }
     end
   end
 
-  def test_report_exception_tag
+  def test_report_exception
     assert_message("[safely] Boom") do
       begin
         raise Safely::TestError, "Boom"
@@ -31,6 +31,8 @@ class TagTest < Minitest::Test
       end
     end
   end
+
+  private
 
   def assert_message(expected)
     ex = nil
