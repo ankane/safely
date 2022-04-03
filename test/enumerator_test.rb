@@ -16,12 +16,11 @@ end
 
 class EnumeratorTest < Minitest::Test
   def test_works
-    count = 0
-    Safely.report_exception_method = -> (_) { count += 1 }
-    3.times.safely do |i|
-      raise Safely::TestError if i.even?
+    assert_count(2) do
+      3.times.safely do |i|
+        raise Safely::TestError if i.even?
+      end
     end
-    assert_equal 2, count
   end
 
   def test_chaining
@@ -69,10 +68,9 @@ class EnumeratorTest < Minitest::Test
   end
 
   def test_enumerable
-    count = 0
-    Safely.report_exception_method = -> (_) { count += 1 }
-    World.new.hello
-    assert_equal 1, count
+    assert_count(1) do
+      World.new.hello
+    end
   end
 
   def test_respond_to?
