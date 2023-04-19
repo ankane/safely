@@ -5,44 +5,53 @@ class SafelyTest < Minitest::Test
     exception = Safely::TestError.new
     mock = MiniTest::Mock.new
     mock.expect :report_exception, nil, [exception]
-    Safely.report_exception_method = -> (e) { mock.report_exception(e) }
-    yolo do
-      raise exception
-    end
+    Safely.report_exception_method = ->(e) { mock.report_exception(e) }
+    yolo { raise exception }
     assert mock.verify
   end
 
   def test_context
     context = nil
-    Safely.report_exception_method = -> (e, ctx) { context = ctx }
-    safely context: {user_id: 123} do
+    Safely.report_exception_method = ->(e, ctx) { context = ctx }
+    safely context: { user_id: 123 } do
       raise Safely::TestError, "Boom"
     end
-    assert_equal ({user_id: 123}), context
+    assert_equal ({ user_id: 123 }), context
   end
 
   def test_return_value
-    assert_equal 1, safely { 1 }
-    assert_nil safely { raise Safely::TestError, "Boom" }
+    assert_equal(1, safely { 1 })
+    assert_nil(safely { raise Safely::TestError, "Boom" })
   end
 
-  def test_default
-    assert_equal 1, safely(default: 2) { 1 }
-    assert_equal 2, safely(default: 2) { raise Safely::TestError, "Boom" }
+  def test_default_value
+    assert_equal(1, safely(default: 2) { 1 })
+    assert_equal(2, safely(default: 2) { raise Safely::TestError, "Boom" })
+  end
+
+  def test_default_block
+    assert_equal(1, safely(default: -> { "default" }) { 1 })
+    assert_equal("default", safely(default: -> { "default" }) { 1 / 0 })
   end
 
   def test_only
     assert_nil safely(only: Safely::TestError) { raise Safely::TestError }
-    assert_raises(RuntimeError, "Boom") { safely(only: Safely::TestError) { raise "Boom" } }
+    assert_raises(RuntimeError, "Boom") do
+      safely(only: Safely::TestError) { raise "Boom" }
+    end
   end
 
   def test_only_array
     assert_nil safely(only: [Safely::TestError]) { raise Safely::TestError }
-    assert_raises(RuntimeError, "Boom") { safely(only: [Safely::TestError]) { raise "Boom" } }
+    assert_raises(RuntimeError, "Boom") do
+      safely(only: [Safely::TestError]) { raise "Boom" }
+    end
   end
 
   def test_except
-    assert_raises(Safely::TestError, "Boom") { safely(except: StandardError) { raise Safely::TestError, "Boom" } }
+    assert_raises(Safely::TestError, "Boom") do
+      safely(except: StandardError) { raise Safely::TestError, "Boom" }
+    end
   end
 
   def test_silence
@@ -51,17 +60,15 @@ class SafelyTest < Minitest::Test
   end
 
   def test_failsafe
-    Safely.report_exception_method = -> (_) { raise "oops" }
-    _, err = capture_io do
-      safely { raise "boom" }
-    end
+    Safely.report_exception_method = ->(_) { raise "oops" }
+    _, err = capture_io { safely { raise "boom" } }
     assert_equal "FAIL-SAFE RuntimeError: oops\n", err
   end
 
   def test_throttle
     assert_count(2) do
       5.times do
-        safely throttle: {limit: 2, period: 3600} do
+        safely throttle: { limit: 2, period: 3600 } do
           raise Safely::TestError
         end
       end
@@ -71,7 +78,7 @@ class SafelyTest < Minitest::Test
   def test_throttle_key
     assert_count(4) do
       5.times do |n|
-        safely throttle: {limit: 2, period: 3600, key: "boom#{n % 2}"} do
+        safely throttle: { limit: 2, period: 3600, key: "boom#{n % 2}" } do
           raise Safely::TestError
         end
       end
@@ -79,9 +86,7 @@ class SafelyTest < Minitest::Test
   end
 
   def test_bad_argument
-    assert_raises(ArgumentError) do
-      safely(unknown: true) { }
-    end
+    assert_raises(ArgumentError) { safely(unknown: true) {} }
   end
 
   def test_respond_to?

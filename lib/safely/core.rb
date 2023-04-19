@@ -29,40 +29,56 @@ module Safely
 
     def throttled?(e, options)
       return false unless options
-      key = "#{options[:key] || Digest::MD5.hexdigest([e.class.name, e.message, e.backtrace.join("\n")].join("/"))}/#{(Time.now.to_i / options[:period]) * options[:period]}"
+
+      key =
+        "#{
+          options[:key] ||
+            Digest::MD5.hexdigest(
+              [e.class.name, e.message, e.backtrace.join("\n")].join("/")
+            )
+        }/#{(Time.now.to_i / options[:period]) * options[:period]}"
       throttle_counter.clear if throttle_counter.size > 1000 # prevent from growing indefinitely
       (throttle_counter[key] += 1) > options[:limit]
     end
   end
 
-  DEFAULT_EXCEPTION_METHOD = proc do |e, context|
-    Errbase.report(e, context)
-  end
+  DEFAULT_EXCEPTION_METHOD = proc { |e, context| Errbase.report(e, context) }
 
   self.tag = true
   self.report_exception_method = DEFAULT_EXCEPTION_METHOD
-  self.raise_envs = %w(development test)
+  self.raise_envs = %w[development test]
   # not thread-safe, but we don't need to be exact
   self.throttle_counter = Hash.new(0)
 
   module Methods
-    def safely(tag: nil, sample: nil, except: nil, only: nil, silence: nil, throttle: false, default: nil, context: {})
+    def safely(
+      tag: nil,
+      sample: nil,
+      except: nil,
+      only: nil,
+      silence: nil,
+      throttle: false,
+      default: nil,
+      context: {}
+    )
       yield
     rescue *Array(only || StandardError) => e
       raise e if Array(except).any? { |c| e.is_a?(c) }
       raise e if Safely.raise_envs.include?(Safely.env)
+
       if sample ? rand < 1.0 / sample : true
         begin
           unless Array(silence).any? { |c| e.is_a?(c) } || Safely.throttled?(e, throttle)
             Safely.report_exception(e, tag: tag, context: context)
           end
-        rescue => e2
-          $stderr.puts "FAIL-SAFE #{e2.class.name}: #{e2.message}"
+        rescue StandardError => e2
+          warn "FAIL-SAFE #{e2.class.name}: #{e2.message}"
         end
       end
-      default
+
+      default.is_a?(Proc) ? default.call : default
     end
-    alias_method :yolo, :safely
+    alias yolo safely
   end
   extend Methods
 end
