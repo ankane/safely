@@ -1,3 +1,7 @@
+## 0.4.0 (unreleased)
+
+- Dropped support for Ruby < 3
+
 ## 0.3.0 (2019-10-28)
 
 - Made `safely` method private to behave like `Kernel` methods

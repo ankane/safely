@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.files         = Dir["*.{md,txt}", "{lib}/**/*"]
   spec.require_path  = "lib"
 
-  spec.required_ruby_version = ">= 2.4"
+  spec.required_ruby_version = ">= 3"
 
   spec.add_dependency "errbase", ">= 0.1.1"
 end
