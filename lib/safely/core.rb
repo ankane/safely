@@ -1,6 +1,11 @@
-require "safely/version"
+# dependencies
 require "errbase"
+
+# stdlib
 require "digest"
+
+# modules
+require_relative "version"
 
 module Safely
   class << self
