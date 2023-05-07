@@ -102,9 +102,10 @@ Reports exceptions to a variety of services out of the box thanks to [Errbase](h
 - [Exception Notification](https://github.com/smartinez87/exception_notification)
 - [Google Stackdriver](https://cloud.google.com/stackdriver/)
 - [Honeybadger](https://www.honeybadger.io/)
-- [Opbeat](https://opbeat.com/)
+- [New Relic](https://newrelic.com/)
 - [Raygun](https://raygun.io/)
 - [Rollbar](https://rollbar.com/)
+- [Scout APM](https://scoutapm.com/)
 - [Sentry](https://getsentry.com/)
 
 Customize reporting with:
