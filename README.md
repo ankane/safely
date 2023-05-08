@@ -108,6 +108,8 @@ Reports exceptions to a variety of services out of the box.
 - [Scout APM](https://scoutapm.com/)
 - [Sentry](https://getsentry.com/)
 
+**Note:** Context is not supported with Google Stackdriver and Scout APM
+
 Customize reporting with:
 
 ```ruby
