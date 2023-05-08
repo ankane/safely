@@ -94,7 +94,7 @@ end
 
 ## Reporting
 
-Reports exceptions to a variety of services out of the box thanks to [Errbase](https://github.com/ankane/errbase).
+Reports exceptions to a variety of services out of the box.
 
 - [Airbrake](https://airbrake.io/)
 - [Appsignal](https://appsignal.com/)

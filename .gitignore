@@ -3,7 +3,7 @@
 .bundle
 .config
 .yardoc
-Gemfile.lock
+*.lock
 InstalledFiles
 _yardoc
 coverage
@@ -19,4 +19,4 @@ tmp
 *.so
 *.o
 *.a
-mkmf.log
+*.log

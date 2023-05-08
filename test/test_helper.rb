@@ -10,7 +10,7 @@ end
 class Minitest::Test
   def setup
     Safely.env = "production"
-    Safely.report_exception_method = Safely::DEFAULT_EXCEPTION_METHOD
+    Safely.report_exception_method = -> (_) { }
   end
 
   def assert_count(expected)

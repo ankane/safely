@@ -1,10 +1,8 @@
-# dependencies
-require "errbase"
-
 # stdlib
 require "digest"
 
 # modules
+require_relative "services"
 require_relative "version"
 
 module Safely
@@ -38,10 +36,6 @@ module Safely
       throttle_counter.clear if throttle_counter.size > 1000 # prevent from growing indefinitely
       (throttle_counter[key] += 1) > options[:limit]
     end
-  end
-
-  DEFAULT_EXCEPTION_METHOD = proc do |e, context|
-    Errbase.report(e, context)
   end
 
   self.tag = true

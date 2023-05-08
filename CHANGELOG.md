@@ -1,5 +1,6 @@
 ## 0.4.0 (unreleased)
 
+- Added exception reporting from Errbase
 - Dropped support for Ruby < 3
 
 ## 0.3.0 (2019-10-28)
