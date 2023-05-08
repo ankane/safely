@@ -1,6 +1,6 @@
 ## 0.4.0 (unreleased)
 
-- Added exception reporting from Errbase
+- Added exception reporting from [Errbase](https://github.com/ankane/errbase)
 - Dropped support for Ruby < 3
 
 ## 0.3.0 (2019-10-28)
