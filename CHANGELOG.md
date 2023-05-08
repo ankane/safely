@@ -1,4 +1,4 @@
-## 0.4.0 (unreleased)
+## 0.4.0 (2023-05-07)
 
 - Added exception reporting from [Errbase](https://github.com/ankane/errbase)
 - Dropped support for Ruby < 3
