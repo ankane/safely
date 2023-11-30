@@ -99,6 +99,7 @@ Reports exceptions to a variety of services out of the box.
 - [Airbrake](https://airbrake.io/)
 - [Appsignal](https://appsignal.com/)
 - [Bugsnag](https://bugsnag.com/)
+- [Datadog](https://www.datadoghq.com/product/error-tracking/)
 - [Exception Notification](https://github.com/smartinez87/exception_notification)
 - [Google Stackdriver](https://cloud.google.com/stackdriver/)
 - [Honeybadger](https://www.honeybadger.io/)
