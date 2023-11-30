@@ -19,6 +19,11 @@ module Safely
         end
       end
 
+      if defined?(Datadog::Tracing)
+        Datadog::Tracing.active_span&.set_tags(info)
+        Datadog::Tracing.active_span&.set_error(e)
+      end
+
       ExceptionNotifier.notify_exception(e, data: info) if defined?(ExceptionNotifier)
 
       # TODO add info
