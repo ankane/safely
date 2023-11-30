@@ -1,3 +1,7 @@
+## 0.4.1 (unreleased)
+
+- Added support for Datadog
+
 ## 0.4.0 (2023-05-07)
 
 - Added exception reporting from [Errbase](https://github.com/ankane/errbase)
