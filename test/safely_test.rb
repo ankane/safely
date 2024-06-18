@@ -5,7 +5,7 @@ class SafelyTest < Minitest::Test
     exception = Safely::TestError.new
     mock = Minitest::Mock.new
     mock.expect :report_exception, nil, [exception]
-    Safely.report_exception_method = -> (e) { mock.report_exception(e) }
+    Safely.report_exception_method = ->(e) { mock.report_exception(e) }
     yolo do
       raise exception
     end
@@ -14,7 +14,7 @@ class SafelyTest < Minitest::Test
 
   def test_context
     context = nil
-    Safely.report_exception_method = -> (e, ctx) { context = ctx }
+    Safely.report_exception_method = ->(e, ctx) { context = ctx }
     safely context: {user_id: 123} do
       raise Safely::TestError, "Boom"
     end
@@ -51,7 +51,7 @@ class SafelyTest < Minitest::Test
   end
 
   def test_failsafe
-    Safely.report_exception_method = -> (_) { raise "oops" }
+    Safely.report_exception_method = ->(_) { raise "oops" }
     _, err = capture_io do
       safely { raise "boom" }
     end

@@ -36,7 +36,7 @@ class TagTest < Minitest::Test
 
   def assert_message(expected)
     ex = nil
-    Safely.report_exception_method = -> (e) { ex = e }
+    Safely.report_exception_method = ->(e) { ex = e }
     yield
     assert_equal expected, ex.message
   end
