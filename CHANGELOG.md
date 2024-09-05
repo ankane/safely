@@ -1,4 +1,4 @@
-## 0.4.1 (unreleased)
+## 0.4.1 (2024-09-04)
 
 - Added support for Datadog
 
