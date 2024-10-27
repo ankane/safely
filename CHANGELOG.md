@@ -36,3 +36,20 @@
 - Added `tag` option and tag exception message by default
 - Added `except` option
 - Added `silence` option
+
+## 0.0.4 (2015-03-11)
+
+- Added fail-safe
+
+## 0.0.3 (2014-08-13)
+
+- Added `safely` method
+
+## 0.0.2 (2014-08-12)
+
+- Added `default` option
+- Added `only` option
+
+## 0.0.1 (2014-08-12)
+
+- First release
