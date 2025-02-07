@@ -128,7 +128,7 @@ Safely.tag = false
 By default, exceptions are raised in the development and test environments. Change this with:
 
 ```ruby
-Safely.raise_envs = %w(development test staging)
+Safely.raise_envs += ["staging"]
 ```
 
 To report exceptions manually:
