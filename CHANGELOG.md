@@ -1,3 +1,7 @@
+## 0.5.0 (unreleased)
+
+- Dropped support for Ruby < 3.2
+
 ## 0.4.1 (2024-09-04)
 
 - Added support for Datadog
