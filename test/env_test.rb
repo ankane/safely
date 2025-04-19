@@ -24,7 +24,7 @@ class EnvTest < Minitest::Test
     mock = Minitest::Mock.new
     mock.expect :report_exception, nil, [exception]
     Safely.report_exception_method = ->(e) { mock.report_exception(e) }
-    safely do
+    safely(tag: false) do
       raise exception
     end
     assert mock.verify
