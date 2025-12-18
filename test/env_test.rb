@@ -21,12 +21,11 @@ class EnvTest < Minitest::Test
 
   def test_production
     exception = Safely::TestError.new
-    mock = Minitest::Mock.new
-    mock.expect :report_exception, nil, [exception]
-    Safely.report_exception_method = ->(e) { mock.report_exception(e) }
+    reported_exceptions = []
+    Safely.report_exception_method = ->(e) { reported_exceptions << e }
     safely(tag: false) do
       raise exception
     end
-    assert mock.verify
+    assert_equal [exception], reported_exceptions
   end
 end
