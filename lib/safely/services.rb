@@ -4,12 +4,8 @@ module Safely
       Airbrake.notify(e, info) if defined?(Airbrake)
 
       if defined?(Appsignal)
-        if Appsignal::VERSION.to_i >= 3
-          Appsignal.send_error(e) do |transaction|
-            transaction.set_tags(info)
-          end
-        else
-          Appsignal.send_error(e, info)
+        Appsignal.send_error(e) do |transaction|
+          transaction.set_tags(info)
         end
       end
 
