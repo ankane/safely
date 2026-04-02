@@ -1,4 +1,4 @@
-## 1.0.0 (unreleased)
+## 1.0.0 (2026-04-01)
 
 - Dropped support for `appsignal` < 3 gem
 - Dropped support for `ddtrace` gem (use `datadog` instead)
