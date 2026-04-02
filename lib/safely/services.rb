@@ -1,7 +1,9 @@
 module Safely
   DEFAULT_EXCEPTION_METHOD = proc do |e, info|
     begin
-      Airbrake.notify(e, info) if defined?(Airbrake)
+      if defined?(Airbrake)
+        Airbrake.notify(e, info)
+      end
 
       if defined?(Appsignal)
         Appsignal.send_error(e) do |transaction|
@@ -20,18 +22,30 @@ module Safely
         Datadog::Tracing.active_span&.set_error(e)
       end
 
-      ExceptionNotifier.notify_exception(e, data: info) if defined?(ExceptionNotifier)
+      if defined?(ExceptionNotifier)
+        ExceptionNotifier.notify_exception(e, data: info)
+      end
 
-      # TODO add info
-      Google::Cloud::ErrorReporting.report(e) if defined?(Google::Cloud::ErrorReporting)
+      if defined?(Google::Cloud::ErrorReporting)
+        # TODO add info
+        Google::Cloud::ErrorReporting.report(e)
+      end
 
-      Honeybadger.notify(e, context: info) if defined?(Honeybadger)
+      if defined?(Honeybadger)
+        Honeybadger.notify(e, context: info)
+      end
 
-      NewRelic::Agent.notice_error(e, custom_params: info) if defined?(NewRelic::Agent)
+      if defined?(NewRelic::Agent)
+        NewRelic::Agent.notice_error(e, custom_params: info)
+      end
 
-      Raygun.track_exception(e, custom_data: info) if defined?(Raygun)
+      if defined?(Raygun)
+        Raygun.track_exception(e, custom_data: info)
+      end
 
-      Rollbar.error(e, info) if defined?(Rollbar)
+      if defined?(Rollbar)
+        Rollbar.error(e, info)
+      end
 
       if defined?(ScoutApm::Error)
         # no way to add context for a single call
@@ -39,7 +53,9 @@ module Safely
         ScoutApm::Error.capture(e)
       end
 
-      Sentry.capture_exception(e, extra: info) if defined?(Sentry)
+      if defined?(Sentry)
+        Sentry.capture_exception(e, extra: info)
+      end
     rescue => e
       $stderr.puts "[safely] Error reporting exception: #{e.class.name}: #{e.message}"
     end
