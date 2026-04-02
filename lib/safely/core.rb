@@ -1,6 +1,3 @@
-# stdlib
-require "digest"
-
 # modules
 require_relative "services"
 require_relative "version"
@@ -32,7 +29,10 @@ module Safely
 
     def throttled?(e, options)
       return false unless options
-      key = "#{options[:key] || Digest::MD5.hexdigest([e.class.name, e.message, e.backtrace.join("\n")].join("/"))}/#{(Time.now.to_i / options[:period]) * options[:period]}"
+      key = [
+        options[:key] || [e.class.name, e.message, e.backtrace.join("\n")].hash,
+        (Time.now.to_i / options[:period]) * options[:period]
+      ]
       throttle_counter.clear if throttle_counter.size > 1000 # prevent from growing indefinitely
       (throttle_counter[key] += 1) > options[:limit]
     end
