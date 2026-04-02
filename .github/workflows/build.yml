@@ -5,10 +5,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby: ["4.0", 3.4, 3.3, 3.2]
+        ruby: ["4.0", 3.4, 3.3]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
