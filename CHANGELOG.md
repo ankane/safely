@@ -1,5 +1,6 @@
 ## 1.0.0 (unreleased)
 
+- Dropped support for `sentry-raven` gem (use `sentry-ruby` instead)
 - Dropped support for Ruby < 3.3
 
 ## 0.5.0 (2025-05-26)

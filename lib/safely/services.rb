@@ -33,8 +33,6 @@ module Safely
 
       NewRelic::Agent.notice_error(e, custom_params: info) if defined?(NewRelic::Agent)
 
-      Raven.capture_exception(e, extra: info) if defined?(Raven)
-
       Raygun.track_exception(e, custom_data: info) if defined?(Raygun)
 
       Rollbar.error(e, info) if defined?(Rollbar)
